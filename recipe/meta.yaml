@@ -1,0 +1,41 @@
+{% set name = "pysimstring" %}
+{% set version = "1.2.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pysimstring-{{ version }}.tar.gz
+  sha256: d2805d9e0b8e887442f9d9b672f5cf912c1eed91b2ca6bbe8250b86df27dd360
+
+build:
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - pysimstring
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/percevalw/simstring
+  summary: Easy to install clone of simstring
+  license: ''
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - skupr-anaconda
