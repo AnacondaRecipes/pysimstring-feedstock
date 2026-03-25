@@ -1,5 +1,5 @@
 {% set name = "pysimstring" %}
-{% set version = "1.2.1" %}
+{% set version = "1.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,15 +7,19 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d2805d9e0b8e887442f9d9b672f5cf912c1eed91b2ca6bbe8250b86df27dd360
+  sha256: ff5215f0b27f6c07041c1e8a1a0e795df3dc9e149a7ef0a1418ace65361d2322
+  patches:
+    # std::binary_function removed in C++17; libc++/Clang 20 errors without this
+    - patches/0001-cdbpp-remove-binary_function-CXX17.patch
 
 build:
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  number: 1
+  number: 0
 
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ stdlib('c')}}
   host:
     - python
     - pip
